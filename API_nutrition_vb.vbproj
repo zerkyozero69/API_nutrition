@@ -155,6 +155,7 @@
     <Compile Include="App_Start\WebApiConfig.vb" />
     <Compile Include="class\nutritionClass.vb" />
     <Compile Include="Controllers\demoController.vb" />
+    <Compile Include="Controllers\LOGIN_Controller.vb" />
     <Compile Include="Controllers\MemberController.vb" />
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
