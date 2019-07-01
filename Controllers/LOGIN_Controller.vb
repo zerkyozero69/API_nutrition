@@ -45,13 +45,16 @@ Namespace Controllers
                     Dim ds As New DataSet
                     Dim sql As String
                     sql = "SELECT User_Name, User_id FROM User_Register WHERE User_Name = @User_Name" 'ทำการ select sql จาก username 
-                    ds = SqlHelper.ExecuteDataset(strConn, CommandType.Text, sql, New SqlParameter("@User_Name", User_name)) 'ทำการเอ็กซีคิว แล้วเทียบพารามิตเตอร์ username 
-                    If ds.Tables(0).Rows.Count < 0 Then
+                    ds = SqlHelper.ExecuteDataset(strConn, CommandType.Text, sql, New SqlParameter("@User_Name", User_name)) 'ทำการเอ็กซีคิว เทียบพารามิตเตอร์ username ที่รับค่ามา 
+                    If ds.Tables(0).Rows.Count > 1 Then
+                        SqlHelper.ExecuteDataset(strConn, CommandType.StoredProcedure, "spT_User_PersonInsert", New SqlParameter("@User_Name", User_name),
+                                                 New SqlParameter("@User_Password", password))
+
                         Dim result_user As New _member 'ประกาศผลเป็น json 
                         result_user.User_name = User_name
                         result_user.Token_key =
                         result_user.Created_date =
-                        result_user.message = "เข้าระบบสำเร็จ"
+                        result_user.message = "เข้าสู่ระบบสำเร็จ"
                         Return Request.CreateResponse(HttpStatusCode.OK, result_user)
                     Else
                         Dim err As [Error]
